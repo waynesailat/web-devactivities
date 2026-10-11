@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,16 +62,19 @@
       flex: 1 1 0;
     }
 
-    .left-feature,
-    .left-bottom {
-      flex: 1 1 0;
-    }
-
     .dogfood-image {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .dog-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 38%;
     }
 
     .right-pair {
@@ -81,7 +85,7 @@
       gap: 12px;
     }
 
-    .right-pair > .h-50 {
+    .right-pair>.h-50 {
       flex: 1 1 0;
     }
 
@@ -99,16 +103,6 @@
 
     .center-stack {
       gap: 12px;
-    }
-
-    .center-top {
-      min-height: 0;
-      flex: 1 1 0;
-    }
-
-    .center-top > div {
-      display: flex;
-      min-height: 0;
     }
 
     .small-card {
@@ -151,84 +145,9 @@
     .right-bottom {
       background: var(--black);
     }
-
-    @media (max-width: 991.98px) {
-      .dashboard {
-        width: 100%;
-      }
-
-      .tile-stack {
-        height: auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .right-pair {
-        display: contents;
-      }
-
-      .left-feature,
-      .left-bottom {
-        min-height: 250px;
-        flex: 1 1 calc(50% - 6px);
-      }
-
-      .center-stack {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .center-top {
-        width: 100%;
-        flex: 1 1 100%;
-      }
-
-      .center-top > div {
-        min-height: 190px;
-      }
-
-      .center-feature,
-      .center-bottom {
-        min-height: 220px;
-        flex: 1 1 100%;
-      }
-
-      .right-feature,
-      .right-middle,
-      .right-bottom {
-        min-height: 220px;
-        flex: 1 1 calc(33.333% - 8px);
-      }
-
-      .right-pair > .h-50 {
-        min-height: 220px;
-        flex: 1 1 calc(33.333% - 8px);
-      }
-    }
-
-    @media (max-width: 575.98px) {
-      body {
-        padding: 6px;
-      }
-
-      .dashboard {
-        padding: 10px;
-      }
-
-      .right-feature,
-      .right-middle,
-      .right-bottom {
-        min-height: 180px;
-        flex-basis: 100%;
-      }
-
-      .right-pair > .h-50 {
-        min-height: 180px;
-        flex-basis: 100%;
-      }
-    }
   </style>
 </head>
+
 <body>
   <main class="container-fluid dashboard" aria-label="Blank card layout">
     <section class="row g-3 align-items-stretch" aria-label="Blank cards arranged in aligned columns">
@@ -237,8 +156,8 @@
           <div class="card left-feature p-1 h-50">
             <img src="assets/dogfood.png" alt="Dog food" class="dogfood-image rounded-3">
           </div>
-          <div class="card left-bottom p-1 h-50">
-            <img class="img-fluid w-100 h-90" src="assets/dog.png" alt="Dog">
+          <div class="card left-bottom p-1">
+            <img class="dog-image" src="assets/dog.png" alt="Dog">
           </div>
         </div>
       </div>
@@ -247,7 +166,7 @@
         <div class="tile-stack center-stack">
           <div class="row g-3 center-top">
             <div class="col-6">
-              <div class="card small-card p-1 w-100">
+              <div class="card small-card p-1 w-100 h-100">
                 <div class="p-3 text-center">
                   <h5>Dog Care Tips</h5>
                   <p class="mb-0">Daily feeding schedule and health advice.</p>
@@ -300,4 +219,5 @@
     </section>
   </main>
 </body>
+
 </html>
