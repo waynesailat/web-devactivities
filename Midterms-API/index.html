@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +21,7 @@
             --lav: #e0d4ff;
             --ink: #4a2c3d;
             --ink-soft: #8a6577;
-            --card: #ffffff;
+            --card: #fff;
         }
 
         * {
@@ -41,7 +40,7 @@
             min-height: 100vh;
             background-color: var(--cream);
             background-image: radial-gradient(var(--pink) 1.5px, transparent 1.5px);
-            background-size: 26px 26px;
+            background-size: 26px 26px
         }
 
         h1,
@@ -62,6 +61,10 @@
         :focus-visible {
             outline: 3px dashed var(--berry);
             outline-offset: 3px
+        }
+
+        .hidden {
+            display: none !important
         }
 
         /* header */
@@ -100,9 +103,7 @@
             border-radius: 50%;
             background: var(--pink);
             border: 3px solid var(--ink);
-            display: grid;
-            place-items: center;
-            font-size: 1.6rem;
+            object-fit: cover;
             box-shadow: 3px 3px 0 var(--ink)
         }
 
@@ -172,15 +173,13 @@
             font-size: clamp(1.9rem, 5vw, 3rem);
             font-weight: 700;
             line-height: 1.1;
-            max-width: 14ch;
-            color: var(--ink)
+            max-width: 14ch
         }
 
         .hero p {
             max-width: 46ch;
             margin: 12px 0 22px;
-            font-weight: 600;
-            color: var(--ink)
+            font-weight: 600
         }
 
         .pill {
@@ -375,6 +374,117 @@
             font: 600 .85rem 'Fredoka', sans-serif
         }
 
+        /* cutesy ring loader: pastel gradient tail + heart head */
+        .spinner {
+            position: relative;
+            width: 88px;
+            height: 88px
+        }
+
+        .spinner .track,
+        .spinner .ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px))
+        }
+
+        .spinner .track {
+            background: var(--pink);
+            opacity: .45
+        }
+
+        .spinner .turn {
+            position: absolute;
+            inset: 0;
+            animation: spin 1.1s linear infinite
+        }
+
+        .spinner .ring {
+            background: conic-gradient(from 0deg, transparent 0%, #9fe0c0 35%, #ffd45e 68%, var(--pink-d) 100%)
+        }
+
+        .spinner .heart {
+            position: absolute;
+            top: -7px;
+            left: calc(50% - 10px);
+            width: 20px;
+            height: 20px;
+            animation: beat .55s ease-in-out infinite alternate;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.8-9.7-9.4C.9 8.7 2.7 5 6.2 5c2.1 0 3.9 1.2 5.8 3.4C13.900 6.200 15.700 5 17.800 5c3.500 0 5.300 3.700 3.900 6.600C19.500 16.200 12 21 12 21z' fill='%23ff8fb8' stroke='%23c2336f' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat
+        }
+
+        @keyframes beat {
+            to {
+                transform: scale(1.25)
+            }
+        }
+
+        /* recipe loader ring: berry head fading to transparent, round cap */
+        .pink-ring {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, rgba(255, 201, 221, 0) 0%, #ffc9dd 38%, var(--pink-d) 70%, var(--berry) 100%);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 9px));
+            animation: spin 1s linear infinite
+        }
+
+        .pink-ring::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: calc(50% - 5px);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--berry)
+        }
+
+        .m-body .recipe-loader {
+            background: none;
+            border: 0
+        }
+
+        .load-msg {
+            font: 600 1.1rem 'Fredoka', sans-serif;
+            color: var(--berry)
+        }
+
+        .loader,
+        .recipe-loader {
+            display: grid;
+            justify-items: center;
+            gap: 12px;
+            text-align: center;
+            border: 3px dashed var(--pink-d);
+            border-radius: 28px
+        }
+
+        .loader {
+            grid-column: 1/-1;
+            padding: 44px 16px;
+            background: #fff
+        }
+
+        .recipe-loader {
+            padding: 34px 16px;
+            background: #fff
+        }
+
+        .m-body.loading>div:not(.recipe-loader) {
+            display: none
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
         /* pager */
         nav.pager {
             display: flex;
@@ -467,10 +577,6 @@
             height: 100%;
             object-fit: cover;
             display: block
-        }
-
-        .hidden {
-            display: none !important
         }
 
         .m-title {
@@ -600,7 +706,8 @@
         <div id="meal-grid"></div>
 
         <nav class="pager" aria-label="Pagination">
-            <button class="btn" id="prev-btn" onclick="prevPage(); window.scrollTo({top: 300, behavior: 'smooth'});">Previous</button>
+            <button class="btn" id="prev-btn"
+                onclick="prevPage(); window.scrollTo({top: 300, behavior: 'smooth'});">Previous</button>
             <span>Page <strong id="currentpage-bottom">1</strong> of <strong id="finalpage">1</strong></span>
             <button class="btn pink" id="next-btn"
                 onclick="nextPage(); window.scrollTo({top: 300, behavior: 'smooth'});">Next</button>
@@ -624,6 +731,10 @@
                 </div>
             </div>
             <div class="m-body">
+                <div id="recipe-loader" class="recipe-loader hidden" role="status" aria-live="polite">
+                    <div class="pink-ring" aria-hidden="true"></div>
+                    <p class="load-msg" id="recipe-msg">Reading the recipe card...</p>
+                </div>
                 <div>
                     <h4>Cooking instructions</h4>
                     <p id="modal-description"></p>
@@ -680,7 +791,37 @@
             }
         ];
 
-        window.addEventListener('DOMContentLoaded', fetchPastaRecipes);
+        /* rotating loading messages */
+        const pageMsgs = ['Boiling the water...', 'Salting the pasta pot...', 'Stirring the sauce...', 'Sprinkling the cheese...', 'Almost ready to serve!'];
+        const recipeMsgs = ['Reading the recipe card...', 'Gathering the ingredients...', 'Heating up the pan...', 'Almost there!'];
+        let pageTimer = null;
+        let recipeTimer = null;
+
+        function rotateMessages(elId, msgs, ms) {
+            let i = 0;
+            const timer = setInterval(() => {
+                const el = document.getElementById(elId);
+                if (!el) return clearInterval(timer);
+                i = (i + 1) % msgs.length;
+                el.textContent = msgs[i];
+            }, ms);
+            return timer;
+        }
+
+        function showLoading() {
+            document.getElementById('meal-grid').innerHTML = `
+    <div class="loader" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"><div class="track"></div><div class="turn"><div class="ring"></div><span class="heart"></span></div></div>
+      <p class="load-msg" id="page-msg">${pageMsgs[0]}</p>
+    </div>`;
+            clearInterval(pageTimer);
+            pageTimer = rotateMessages('page-msg', pageMsgs, 1400);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            showLoading();
+            fetchPastaRecipes();
+        });
 
         function normalizeMeal(meal) {
             return {
@@ -748,6 +889,7 @@
         function nextPage() { if (page < finalPage) { page += 1; updatePagination(); renderMeals(); } }
 
         function renderMeals() {
+            clearInterval(pageTimer);
             const grid = document.getElementById('meal-grid');
             const emptyState = document.getElementById('empty-state');
             const resultsCount = document.getElementById('results-count');
@@ -770,9 +912,7 @@
             grid.innerHTML = paginatedMeals.map(meal => `
     <div class="card" data-meal-id="${escapeHtml(meal.id)}" tabindex="0" role="button" aria-label="View recipe for ${escapeHtml(meal.title)}">
       <div class="thumb">
-        ${meal.image
-                    ? `<img src="${escapeHtml(meal.image)}" alt="${escapeHtml(meal.title)}" loading="lazy" onerror="this.classList.add('hidden')">`
-                    : ''}
+        ${meal.image ? `<img src="${escapeHtml(meal.image)}" alt="${escapeHtml(meal.title)}" loading="lazy" onerror="this.classList.add('hidden')">` : ''}
         <span class="tag">${escapeHtml(meal.area)}</span>
       </div>
       <div class="body">
@@ -800,11 +940,21 @@
             return String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
         }
 
+        function stopRecipeLoading() {
+            clearInterval(recipeTimer);
+            document.getElementById('recipe-loader').classList.add('hidden');
+            const body = document.querySelector('.m-body');
+            body.classList.remove('loading');
+            body.setAttribute('aria-busy', 'false');
+        }
+
         async function openMealModal(mealId) {
             const meal = allMeals.find(item => item.id === String(mealId));
             if (!meal) return;
             const requestId = ++modalRequestId;
             const image = document.getElementById('modal-image');
+            const loader = document.getElementById('recipe-loader');
+            const modalBody = document.querySelector('.m-body');
             if (meal.image) {
                 image.onerror = () => image.classList.add('hidden');
                 image.src = meal.image;
@@ -817,14 +967,26 @@
             }
 
             document.getElementById('modal-title').textContent = meal.title;
-            document.getElementById('modal-description').textContent = meal.instructions || 'Loading cooking instructions...';
-            document.getElementById('modal-facts').innerHTML = meal.ingredients.length
-                ? renderIngredients(meal.ingredients)
-                : '<li>Loading ingredients...</li>';
+            document.getElementById('modal-description').textContent = meal.instructions || '';
+            document.getElementById('modal-facts').innerHTML = meal.ingredients.length ? renderIngredients(meal.ingredients) : '';
 
             document.getElementById('details-modal').classList.add('open');
 
-            if (meal.instructions) return;
+            loader.classList.remove('hidden');
+            modalBody.classList.add('loading');
+            modalBody.setAttribute('aria-busy', 'true');
+            document.getElementById('recipe-msg').textContent = recipeMsgs[0];
+            clearInterval(recipeTimer);
+            recipeTimer = rotateMessages('recipe-msg', recipeMsgs, 1300);
+
+            // loader shows every time a recipe opens, for at least a moment
+            const minDelay = new Promise(resolve => setTimeout(resolve, 900));
+
+            if (meal.instructions) {
+                await minDelay;
+                if (requestId === modalRequestId) stopRecipeLoading();
+                return;
+            }
 
             try {
                 const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${encodeURIComponent(meal.id)}`);
@@ -832,6 +994,7 @@
                 const data = await response.json();
                 if (!Array.isArray(data.meals) || !data.meals[0]) throw new Error(`TheMealDB did not return details for ${meal.title}.`);
 
+                await minDelay;
                 const details = normalizeMeal(data.meals[0]);
                 const updatedMeal = { ...meal, ...details };
                 allMeals = allMeals.map(item => item.id === updatedMeal.id ? updatedMeal : item);
@@ -847,6 +1010,8 @@
                 if (requestId !== modalRequestId) return;
                 document.getElementById('modal-description').textContent = 'Could not load cooking instructions. Check your connection and open the recipe again.';
                 document.getElementById('modal-facts').innerHTML = '<li>Could not load ingredients.</li>';
+            } finally {
+                if (requestId === modalRequestId) stopRecipeLoading();
             }
         }
 
@@ -858,6 +1023,7 @@
 
         function closeModal() {
             modalRequestId += 1;
+            stopRecipeLoading();
             document.getElementById('details-modal').classList.remove('open');
         }
 
@@ -872,5 +1038,3 @@
 </body>
 
 </html>
-
-Claude finished the response
