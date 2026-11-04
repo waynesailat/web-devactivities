@@ -374,53 +374,6 @@
             font: 600 .85rem 'Fredoka', sans-serif
         }
 
-        /* cutesy ring loader: pastel gradient tail + heart head */
-        .spinner {
-            position: relative;
-            width: 88px;
-            height: 88px
-        }
-
-        .spinner .track,
-        .spinner .ring {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px))
-        }
-
-        .spinner .track {
-            background: var(--pink);
-            opacity: .45
-        }
-
-        .spinner .turn {
-            position: absolute;
-            inset: 0;
-            animation: spin 1.1s linear infinite
-        }
-
-        .spinner .ring {
-            background: conic-gradient(from 0deg, transparent 0%, #9fe0c0 35%, #ffd45e 68%, var(--pink-d) 100%)
-        }
-
-        .spinner .heart {
-            position: absolute;
-            top: -7px;
-            left: calc(50% - 10px);
-            width: 20px;
-            height: 20px;
-            animation: beat .55s ease-in-out infinite alternate;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.8-9.7-9.4C.9 8.7 2.7 5 6.2 5c2.1 0 3.9 1.2 5.8 3.4C13.900 6.200 15.700 5 17.800 5c3.500 0 5.300 3.700 3.900 6.600C19.500 16.200 12 21 12 21z' fill='%23ff8fb8' stroke='%23c2336f' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat
-        }
-
-        @keyframes beat {
-            to {
-                transform: scale(1.25)
-            }
-        }
-
         /* recipe loader ring: berry head fading to transparent, round cap */
         .pink-ring {
             position: relative;
@@ -811,7 +764,7 @@
         function showLoading() {
             document.getElementById('meal-grid').innerHTML = `
     <div class="loader" role="status" aria-live="polite">
-      <div class="spinner" aria-hidden="true"><div class="track"></div><div class="turn"><div class="ring"></div><span class="heart"></span></div></div>
+      <div class="pink-ring" aria-hidden="true"></div>
       <p class="load-msg" id="page-msg">${pageMsgs[0]}</p>
     </div>`;
             clearInterval(pageTimer);
@@ -840,6 +793,7 @@
         }
 
         async function fetchPastaRecipes() {
+            const minimumLoadingTime = new Promise(resolve => setTimeout(resolve, 1800));
             try {
                 const response = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Pasta');
                 if (!response.ok) throw new Error(`TheMealDB returned ${response.status} while loading pasta recipes.`);
@@ -852,6 +806,7 @@
                 usingFallbackData = true;
                 allMeals = fallbackMeals;
             }
+            await minimumLoadingTime;
             filteredMeals = allMeals;
             updatePagination();
             renderMeals();
